@@ -1,8 +1,3 @@
-﻿Intelligens Elosztott Rendszerek
-BMEVIMIAC02
-Házi feladat specifikáció
-2023/2024 tavasz
-
 
 Specifikáció
 Feladat 
