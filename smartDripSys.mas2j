@@ -1,21 +1,10 @@
-/*
-    smartDripSys
-    ---------------------------
-
-    Jason Application File
-
-    This file defines the initial state of the MAS
-
-    Jason 3.2.0
-    április 11, 2024 - 17:31:40
-*/
-
 MAS smartDripSys {
 
     environment: example.Env(10)
 
     agents: bob;
             alice;
+            control;
 
     aslSourcePath: "src/agt";
 }
