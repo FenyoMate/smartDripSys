@@ -1,38 +1,23 @@
 // Agent Control in project smartDripSys
 
 /* Initial beliefs and rules */
-+InitialBeliefs : true <- .print("Initial beliefs and rules").
-reportX(0).
-reportY(0).
-reportZ(0).
-getReportFromAgent(X, reportX).
-getReportFromAgent(Y, reportY).
-getReportFromAgent(Z, reportZ).
 
+nedves[source(x),source(y),source(z)].
+szaraz[source(x),source(y),source(z)].
 
 /* Initial goals */
 !start.
 
 /* Plans */
 
-+!start : true 
-    <-  .print("Starting the agent control system.");
-        .print(reportX, reportY, reportZ);
-        .print("Waiting for agents to report.").
++!start
+    <-  .print("Starting the watering system.");
+        !water(0,0,0).
 
-// Receive reports from agents X, Y, and Z
-+reportFromAgent(agentName, report) : true
-    <- .print("Received report from ", agentName, ": ", report);
-       .if (agentName == "X") { .add_belief(reportX(report)); }
-       .if (agentName == "Y") { .add_belief(reportY(report)); }
-       .if (agentName == "Z") { .add_belief(reportZ(report)); }
-       .print("Checking majority of the reports.");
++!water(X,Y,Z) : X<0.5 & Y<0.5 & Z<0.5
+    <-  .print("Watering all sources.", X, Y, Z);
+        !water(X+0.1, Y+0.1, Z+0.1).
 
-       !check.
++!water(X,Y,Z) : X>=0.5 & Y>=0.5 & Z>=0.5
+    <-  .print("All sources are wet enough.").
 
-// Check the majority of the reports and decide to activate the watering system or not
-+!check : majorityReports(X, Y, Z) & (X + Y + Z > 1) <- .send(Actuator, achieve, water).
-+!check : majorityReports(X, Y, Z) & (X + Y + Z <= 1) <- .send(Actuator, achieve, noWater).
-
-// Helper plans to check the majority of the reports
-+majorityReports(X, Y, Z) : reportX(X) & reportY(Y) & reportZ(Z) <- true.

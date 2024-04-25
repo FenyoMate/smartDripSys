@@ -6,7 +6,5 @@ MAS smartDripSys {
             y;
             z;
             control;
-            simulation;
-
     aslSourcePath: "src/agt";
 }
