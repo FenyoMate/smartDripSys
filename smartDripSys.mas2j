@@ -5,7 +5,7 @@ MAS smartDripSys {
     agents: x;
             y;
             z;
-            control
+            control;
             simulation;
 
     aslSourcePath: "src/agt";

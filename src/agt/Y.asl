@@ -12,5 +12,12 @@
 +!collectData : true
     <- .print("Collecting data...");
        // Assume getData() is a function that collects data from the soil
-       ?getData(Data);
+       Data = 0.4; // Assume the data is 0.4 for now
        .send(control, tell, reportFromAgent("Y", Data)).
+       
+
+// Handle failures in the getData() function
+-!collectData : true
+    <-  .print("Failed to collect data. Retrying...");
+        // You can add a delay here if necessary
+        !collectData.
