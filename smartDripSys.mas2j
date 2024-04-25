@@ -2,9 +2,11 @@ MAS smartDripSys {
 
     environment: example.Env(10)
 
-    agents: bob;
-            alice;
-            control;
+    agents: x;
+            y;
+            z;
+            control
+            simulation;
 
     aslSourcePath: "src/agt";
 }

@@ -1,17 +1,16 @@
 // Agent Z in project smartDripSys
 
 /* Initial beliefs and rules */
++InitialBeliefs : true <- .print("Initial beliefs and rules").
 
 /* Initial goals */
-
-!start.
+!collectData.
 
 /* Plans */
 
-+!start : true <- .print("Starting measurement."). 
-                   +incomingData(Z).
-                   !decideZ.
-
-+!decideZ : incomingData(Z) & desiredData(D) & (Z > D * 1.01) <- .send(Control, tell, -1).
-+!decideZ : incomingData(Z) & desiredData(D) & (Z <= D * 1.01) & (Z >= D * 0.99) <- .send(Control, tell, 0).
-+!decideZ : incomingData(Z) & desiredData(D) & (Z < D * 0.99) <- .send(Control, tell, 1).
+// Collect data and send it to the controller
++!collectData : true
+    <- .print("Collecting data...");
+       // Assume getData() is a function that collects data from the soil
+       ?getData(Data);
+       .send(control, tell, reportFromAgent("Z", Data)).
