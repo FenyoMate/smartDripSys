@@ -1,6 +1,6 @@
 MAS smartDripSys {
 
-    environment: example.Env(10)
+    environment: hf
 
     agents: x;
             y;

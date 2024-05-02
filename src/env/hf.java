@@ -24,28 +24,39 @@ import jason.asSyntax.parser.*;
 
 import java.util.logging.*;
 
-public class Env extends Environment {
-
+public class hf extends Environment {
     private Logger logger = Logger.getLogger("smartDripSys."+Env.class.getName());
-    JButton button = new JButton("Park my car!");
+    JButton button = new JButton("Start dripping");
 
-    public Env() {
-        JFrame frame = new JFrame("Car parking system");
+    public hf() {
+        JFrame frame = new JFrame("Smart Drip Sys");
 
 
     	frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 
-		JPanel xPanel = new JPanel(new BorderLayout());
-		Label xLabel = new Label("x");
-		JTextField xField = new JTextField("2");
-		xPanel.add(xLabel, BorderLayout.WEST);
-		xPanel.add(xField, BorderLayout.CENTER);
+		JPanel s1Panel = new JPanel(new BorderLayout());
+		Label s1Label = new Label("Sensor 1");
+		JTextField s1Field = new JTextField("2");
+		s1Panel.add(s1Label, BorderLayout.WEST);
+		s1Panel.add(s1Field, BorderLayout.CENTER);
 
-		JPanel yPanel = new JPanel(new BorderLayout());
-		Label yLabel = new Label("y");
-		JTextField yField = new JTextField("2");
-		yPanel.add(yLabel, BorderLayout.WEST);
-		yPanel.add(yField, BorderLayout.CENTER);
+		JPanel s2Panel = new JPanel(new BorderLayout());
+		Label s2Label = new Label("Sensor 2");
+		JTextField s2Field = new JTextField("2");
+		s2Panel.add(s2Label, BorderLayout.WEST);
+		s2Panel.add(s2Field, BorderLayout.CENTER);
+
+		JPanel s3Panel = new JPanel(new BorderLayout());
+		Label s3Label = new Label("Sensor 3");
+		JTextField s3Field = new JTextField("2");
+		s3Panel.add(s3Label, BorderLayout.WEST);
+		s3Panel.add(s3Field, BorderLayout.CENTER);
+
+		JPanel cPanel = new JPanel(new BorderLayout());
+		Label cLabel = new Label("Controller Threshold");
+		JTextField cField = new JTextField("2");
+		cPanel.add(cLabel, BorderLayout.WEST);
+		cPanel.add(cField, BorderLayout.CENTER);
 
 		frame.add(button, BorderLayout.NORTH);
 
@@ -55,11 +66,13 @@ public class Env extends Environment {
     	 //   Literal percept = ASSyntax.createLiteral(
     		//);
     	});
-		frame.getContentPane().add(xPanel);
-		frame.getContentPane().add(yPanel);
+		frame.getContentPane().add(s1Panel);
+		frame.getContentPane().add(s2Panel);
+		frame.getContentPane().add(s3Panel);
+		frame.getContentPane().add(cPanel);
     	frame.getContentPane().add(button);
     	frame.pack();
-    	frame.setSize(300, 150);
+    	frame.setSize(550, 200);
     	frame.setVisible(true);
     }
 
@@ -90,3 +103,4 @@ public class Env extends Environment {
     }
 
 }
+
