@@ -25,7 +25,19 @@ import jason.asSyntax.parser.*;
 import java.util.logging.*;
 
 public class hf extends Environment {
-    private Logger logger = Logger.getLogger("smartDripSys."+Env.class.getName());
+
+
+	//Raining event and raining value
+	public static final int moisture = 0;
+	public static final Term rain = Literal.parseLiteral("rain");
+	public static final int rv = 1;
+
+	//Term, Literal declaration
+	public static final Literal s1 = Literal.parseLiteral("scan(s1)");
+
+
+	
+    private Logger logger = Logger.getLogger("smartDripSys."+hf.class.getName());
     JButton button = new JButton("Start dripping");
 
     public hf() {
