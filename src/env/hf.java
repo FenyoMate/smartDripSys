@@ -3,6 +3,7 @@ import jason.environment.Environment;
 import jason.environment.grid.GridWorldModel;
 import jason.environment.grid.GridWorldView;
 import jason.environment.grid.Location;
+import jason.asSyntax.parser.ParseException;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -18,24 +19,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import jason.asSyntax.*;
-import jason.environment.*;
-import jason.asSyntax.parser.*;
 
-import java.util.logging.*;
 
 public class hf extends Environment {
-
-
-	//Raining event and raining value
-	public static final int moisture = 0;
-	public static final Term rain = Literal.parseLiteral("rain");
-	public static final int rv = 1;
-
-	//Term, Literal declaration
-	public static final Literal s1 = Literal.parseLiteral("scan(s1)");
-
-
 	
     private Logger logger = Logger.getLogger("smartDripSys."+hf.class.getName());
     JButton button = new JButton("Start dripping");
@@ -91,22 +77,53 @@ public class hf extends Environment {
     /** Called before the MAS execution with the args informed in .mas2j */
     @Override
     public void init(String[] args) {
-        super.init(args);
-        try {
-            addPercept(ASSyntax.parseLiteral("percept("+args[0]+")"));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        
+		//TODO: Panelek inicializálása és beállítása
+		/* Modell követelmények:
+		 * - Legyen gomb esőzésre
+		 * - +- gombok a nedvesedés manuális állítására (0-1 között) ágensenként
+		*/
     }
 
     @Override
     public boolean executeAction(String agName, Structure action) {
-        logger.info("executing: "+action+", but not implemented!");
-        if (true) { // you may improve this condition
-             informAgsEnvironmentChanged();
-        }
-        return true; // the action was executed with success
+        
+
+		try{
+			switch (action.getFunctor()) {
+				case "scan": //Bejövő parancs az ágensektől
+					logger.info( action.getFunctor() +" Scanning event " + agName); //KI: "scan Scanning event control"
+					addPercept(agName, Literal.parseLiteral("scanning"));
+				break;
+				case "rain":
+					rain(0.2);
+					logger.info("Rain event");
+				break;
+
+				case "poll":
+					rain(0.2);
+				break;
+
+				default:
+					logger.info("Unknown action: " + action);
+					return false;
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		delay(500);
+		return true;
     }
+
+	public void delay(long ms){
+		try {
+			Thread.sleep(ms);
+		} catch (Exception e) {}
+	}
+
+	public void rain(double intensity){
+		//TODO esőzés esemény megvalósítása
+	}
 
     /** Called before the end of MAS execution */
     @Override
