@@ -26,6 +26,11 @@ public class hf extends Environment {
     private Logger logger = Logger.getLogger("smartDripSys."+hf.class.getName());
     JButton button = new JButton("Start dripping");
 
+	public static final Term poll = Literal.parseLiteral("poll(N)");
+	public static final Term water = Literal.parseLiteral("watering(field)");
+	public static final Term dry = Literal.parseLiteral("dry(field)");
+
+
     public hf() {
         JFrame frame = new JFrame("Smart Drip Sys");
 
@@ -95,15 +100,6 @@ public class hf extends Environment {
 					logger.info( action.getFunctor() +" Scanning event " + agName); //KI: "scan Scanning event control"
 					addPercept(agName, Literal.parseLiteral("scanning"));
 				break;
-				case "rain":
-					rain(0.2);
-					logger.info("Rain event");
-				break;
-
-				case "poll":
-					rain(0.2);
-				break;
-
 				default:
 					logger.info("Unknown action: " + action);
 					return false;
@@ -119,10 +115,6 @@ public class hf extends Environment {
 		try {
 			Thread.sleep(ms);
 		} catch (Exception e) {}
-	}
-
-	public void rain(double intensity){
-		//TODO esőzés esemény megvalósítása
 	}
 
     /** Called before the end of MAS execution */

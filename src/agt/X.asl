@@ -1,39 +1,34 @@
-// Agent X in project smartDripSys
+agent(sensor_X).
 
-/* Szenzorok szimulált változói */
-moisturness(0.3).
+!start.
 
-/* Raining and watering events */
+    // A szabályok végrehajtásának kezdete
++!start <-
+    // Végrehajtja a páratartalom-mérést
+    .print("Starting humidity measurement");
+    .perform_measurement(XValue);
+    // Kinyeri a kívánt értéket a helyzetből
+    .print("Extracting desired value from situation");
+    .percept(situation(DesiredValue));
+    // Meghatározza az eltérést a mért és a kívánt érték között
+    .print("Calculating difference");
+    Difference == XValue - DesiredValue;
+    .print("Deciding for sensor X");
+    .decideX(Difference, Vote);
+    .send(vote(sensor_X, Vote)).
 
-+raining(Intensity, Duration) : moisturness(N) & N <= 0.4 <-
-    +replace(moisturness(N), moisturness(N + 0.1)).
-    !broadcastM(N).
+// Páratartalom-mérés
++!perform_measurement(XValue) <-
+    // A páratartalom-mérés elvégzése (például szenzorolvasás)
+    // Itt XValue kapja meg a mért értéket
+    XValue = 20. // Példa érték; valódi szenzorolvasás helye
 
-+drying() : moisturness(N) <-
-    +replace(moisturness(N), moisturness(N - 0.1)).
-    !broadcastM(N).
+// Döntés meghozatala az X szenzor számára
++!decideX(Difference, Vote) : Difference > 5 <-
+        Vote = -1.
 
-+watering(Duration) : moisturness(N) & N <= 0.4 <-
-    +replace(moisturness(N), moisturness(N + 0.1)).
-    !broadcastM(N).
++!decideX(Difference, Vote) : Difference < -5 <-
+        Vote = 1.   
 
-+replace(Old, New) : moisturness(Old) <- moisturness(New).
-
-// ---------------------------------------------------------------------
-
-+!broadcastM(N) <-
-    ?replace(moisturness(N), moisturness(N));
-    .print("Moisturness is: ", N);
-    ?replace(moisturness(N), moisturness(N));
-    .broadcast(tell, moisture(N));
-    !didWeWater(N).
-
-
-
-/* Goal */
-
-
-
-/* Plans */
-
-+!poll(success) : 
++!decideX(Difference, Vote) <-
+        Vote = 0.
