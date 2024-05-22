@@ -65,10 +65,17 @@ public class hf extends Environment {
 
 
 		button.addActionListener((e) -> {
-			button.setEnabled(false);
-    	 //   Literal percept = ASSyntax.createLiteral(
-    		//);
+			clearPercepts();
+			String target = cField.getText();
+			String a1 = s1Field.getText();
+			String a2 = s2Field.getText();
+			String a3 = s3Field.getText();
+			addPercept(Literal.parseLiteral("start_sensors(" + target + ")"));
+			addPercept(Literal.parseLiteral("x(" + a1 + ")"));
+			addPercept(Literal.parseLiteral("y(" + a2 + ")"));
+			addPercept(Literal.parseLiteral("z(" + a3 + ")"));
     	});
+
 		frame.getContentPane().add(s1Panel);
 		frame.getContentPane().add(s2Panel);
 		frame.getContentPane().add(s3Panel);
