@@ -5,19 +5,26 @@ agent(control).
 
 
 +start_sensors(N)
-    <- .send(sensor_X,achieve,decide(N));
-       .send(sensor_Y,achieve,decide(N));
-       .send(sensor_Z,achieve,decide(N));
-       -start_sensors;
-        .print("sent beliefs").
+    <- 
+        .print("Start polling sensors");
+        .send(sensor_X,achieve,decide(N)).
 
-+!water
++!receiveVotes(V) : V > 0
+    <- +water.
+
++!receiveVotes(V) : V < 0
+    <- +no_water.
+
++!receiveVotes(V) : V == 0
+    <- +nothing.
+
++water
     <-  .print("tobb viz").
 
-+!no_water
++no_water
     <- .print("kevesebb viz").
 
-+!nothing
++nothing
     <- .print("jo igy").
 
 /*+!start <-
