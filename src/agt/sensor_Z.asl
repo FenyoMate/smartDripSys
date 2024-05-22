@@ -1,8 +1,25 @@
-// Agent X in project smartDripSys
+//5%
 
-/* Szenzorok szimulált változói */
 +z(Z).
 
-+!decide(Target,YVote) : true
++!decide(Target,Y)  
         <- 
-        .send(control,tell,receiveVotes(ZVote)).
+        Also = Target - Target/20;
+        Felso = Target + Target/20;
+        ?z(Z);
+        !doVote(Also,Felso,Z,Y).
+
++!doVote(Also,Felso,Actual,Prev) : Actual < Also
+        <-
+                -z(_);
+                Vote = Prev + 1;
+                .send(control,achieve,receiveVotes(Vote)).
++!doVote(Also,Felso,Actual,Prev) : Actual > Also & Actual < Felso 
+        <-
+                -z(_);
+                .send(control,achieve,receiveVotes(Prev)).
++!doVote(Also,Felso,Actual,Prev) : Actual > Felso
+        <-
+                -z(_);
+                Vote = Prev - 1;
+                .send(control,achieve,receiveVotes(Vote)).

@@ -3,18 +3,29 @@ agent(control).
 // Folyamat kezdete
 //!start.
 
-total_sum(0).
 
-+percept(V) 
-    <-
-        .print(V).
++start_sensors(N)
+    <- 
+        .print("Start polling sensors");
+        .send(sensor_X,achieve,decide(N)).
 
-+start_sensors(N,X,Y,Z)
-    <- .send(sensor_X,achieve,decide(N,X));
-       //.send(Y,tell,decide(N,Y));
-       //.send(Z,tell,decide(N,Z));
-       -start_sensors;
-        .print("sent beliefs").
++!receiveVotes(V) : V > 1 
+    <- +water.
+
++!receiveVotes(V) : V < -1
+    <- +no_water.
+
++!receiveVotes(V) : V > -1 & V < 1
+    <- +nothing.
+
++water
+    <-  .print("tobb viz").
+
++no_water
+    <- .print("kevesebb viz").
+
++nothing
+    <- .print("jo igy").
 
 /*+!start <-
     // Kezdetben nincs összes szavazat

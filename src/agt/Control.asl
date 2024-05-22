@@ -7,15 +7,16 @@ agent(control).
 +start_sensors(N)
     <- 
         .print("Start polling sensors");
-        .send(sensor_X,achieve,decide(N)).
+        .send(sensor_X,achieve,decide(N));
+        -start_sensors(_).
 
-+!receiveVotes(V) : V > 0
++!receiveVotes(V) : V > 1 
     <- +water.
 
-+!receiveVotes(V) : V < 0
++!receiveVotes(V) : V < -1
     <- +no_water.
 
-+!receiveVotes(V) : V == 0
++!receiveVotes(V) : V > -1 & V < 1
     <- +nothing.
 
 +water

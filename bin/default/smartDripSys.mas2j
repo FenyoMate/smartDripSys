@@ -1,6 +1,8 @@
 MAS smartDripSys {
     environment: hf
     agents: sensor_X;
+            sensor_Y;
+            sensor_Z;
             control;
     aslSourcePath: "src/agt";
 }
