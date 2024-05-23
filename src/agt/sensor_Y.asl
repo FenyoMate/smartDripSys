@@ -6,24 +6,24 @@
         <- 
         .print("Decide: ",Target);
         .print("Decision of X is: ",Xvote);
-        Also = Target - Target/33;
-        Felso = Target + Target/33;
+        Bottom = Target - Target/33;
+        Top = Target + Target/33;
         ?y(Y);
-        .print("Correctional values: ", Also, " ", Felso);
-        !doVote(Target,Also,Felso,Y,Xvote).
+        .print("Correctional values: ", Bottom, " ", Top);
+        !doVote(Target,Bottom,Top,Y,Xvote).
 
-+!doVote(Target,Also,Felso,Actual,Prev) : Actual < Also
++!doVote(Target,Bottom,Top,Actual,Prev) : Actual < Bottom
         <-
                 -y(_);
                 Vote = Prev + 1;
                 .print("Vote: ", Vote);
                 .send(sensor_Z,achieve,decide(Target,Vote)).
-+!doVote(Target,Also,Felso,Actual,Prev) : Actual > Also & Actual < Felso 
++!doVote(Target,Bottom,Top,Actual,Prev) : Actual > Bottom & Actual < Top 
         <-
                 -y(_);
                 .print("Vote: ", Prev);
                 .send(sensor_Z,achieve,decide(Target,Prev)).
-+!doVote(Target,Also,Felso,Actual,Prev) : Actual > Felso
++!doVote(Target,Bottom,Top,Actual,Prev) : Actual > Top
         <-
                 -y(_);
                 Vote = Prev -1;
