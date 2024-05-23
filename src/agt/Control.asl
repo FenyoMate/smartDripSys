@@ -1,7 +1,5 @@
 agent(control).
 
-
-
 +start_sensors(N)
     <- 
         .print("Start polling sensors");
@@ -14,7 +12,6 @@ agent(control).
     +water.
 
 +!receiveVotes(V) : V < -1
-    
     <- 
     .print("Voting successful, stops dripping: " , V);
     +no_water.
